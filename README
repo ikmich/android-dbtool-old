@@ -1,0 +1,4 @@
+#android-dbtool
+A database Abstraction utility library for SQLite in Android development.
+
+-> Get the source code from package org.ikmich.dbtool or use the compiled jar package in your project.
