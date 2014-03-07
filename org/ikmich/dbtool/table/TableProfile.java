@@ -2,8 +2,11 @@ package org.ikmich.dbtool.table;
 
 import java.util.ArrayList;
 
+import android.text.TextUtils;
+
 /**
- * Utility class to help build the SQL string required to create a database table.
+ * Utility class to help build the SQL string required to create a database
+ * table.
  * 
  * @author ikmich
  */
@@ -29,7 +32,7 @@ public class TableProfile
 		constraintDefinitions = new ArrayList<String>();
 		finalDefinitions = new ArrayList<String>();
 
-		if (name != null)
+		if (!TextUtils.isEmpty(name))
 		{
 			setTableName(name);
 			sqlCreatePrefix = getCreateSQLPrefix(name);
@@ -38,7 +41,8 @@ public class TableProfile
 
 	private String getCreateSQLPrefix(String tableName)
 	{
-		return "CREATE TABLE IF NOT EXISTS " + tableName + "( ";
+		String s = "CREATE TABLE IF NOT EXISTS " + tableName + " (";
+		return s;
 	}
 
 	/**
@@ -106,7 +110,8 @@ public class TableProfile
 	}
 
 	/**
-	 * Checks if this TableProfile object is built i.e. if the required SQL query to create the table has been compiled.
+	 * Checks if this TableProfile object is built i.e. if the required SQL
+	 * query to create the table has been compiled.
 	 * 
 	 * @return
 	 */
@@ -116,8 +121,9 @@ public class TableProfile
 	}
 
 	/**
-	 * Builds the table description string that can be used in a create/alter table sql statement. This description
-	 * string can be retrieved using getCreateSQL() on this instance.
+	 * Builds the table description string that can be used in a create/alter
+	 * table sql statement. This description string can be retrieved using
+	 * getCreateSQL() on this instance.
 	 * 
 	 * @return The TableProfile object, for chaining purposes.
 	 */

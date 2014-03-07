@@ -43,7 +43,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Private Constructor. Creates a Dbtool instance and assigns an SQLiteDatabase object to work with.
+	 * Private Constructor. Creates a Dbtool instance and assigns an
+	 * SQLiteDatabase object to work with.
 	 * 
 	 * @param c
 	 *        The current context.
@@ -58,7 +59,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Returns a new Dbtool instance or the last Dbtool instance if it has been created before.
+	 * Returns a new Dbtool instance or the last Dbtool instance if it has been
+	 * created before.
 	 * 
 	 * @param c
 	 *        The context.
@@ -152,8 +154,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Sets the name of the database to work with. Does NOT open the database. You can call openDb() later to open the
-	 * database.
+	 * Sets the name of the database to work with. Does NOT open the database.
+	 * You show call openDb() later to open the database.
 	 * 
 	 * @param databaseName
 	 */
@@ -162,8 +164,9 @@ public class Dbtool implements IDbtoolAction
 		_dbName = databaseName;
 
 		/*
-		 * If an SQLiteDatabase object is already defined for this Dbtool instance and its name is
-		 * not the same as the one set here, a new SQLiteDatabase needs to be created.
+		 * If an SQLiteDatabase object is already defined for this 
+		 * Dbtool instance and its name is not the same as the one set 
+		 * here, a new SQLiteDatabase needs to be created.
 		 */
 		if (_db != null && !_dbName.equals(getDbName(_db)))
 		{
@@ -173,7 +176,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Sets the SQLiteDatabase to work with and extracts the database name from it.
+	 * Sets the SQLiteDatabase to work with and extracts the database name from
+	 * it.
 	 * 
 	 * @param db
 	 *        An SQLiteDatabase to use with the dbtool instance.
@@ -203,7 +207,8 @@ public class Dbtool implements IDbtoolAction
 	/**
 	 * Gets the current sqlite database in use by this Dbtool instance.
 	 * 
-	 * @return The sqlite database. Returns null if no database is associated with this Dbtool instance.
+	 * @return The sqlite database. Returns null if no database is associated
+	 *         with this Dbtool instance.
 	 */
 	public SQLiteDatabase getActiveDb()
 	{
@@ -211,7 +216,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Gets the sqlite database for the Dbtool instance represented by the name with which it's stored.
+	 * Gets the sqlite database for the Dbtool instance represented by the name
+	 * with which it's stored.
 	 * 
 	 * @param dbName
 	 *        The name of the database.
@@ -267,7 +273,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Checks if a database exists. As a static method, it should be called thus: Dbtool.dbExists(...);
+	 * Checks if a database exists. As a static method, it should be called
+	 * thus: Dbtool.dbExists(...);
 	 * 
 	 * @param databaseName
 	 *        The name of the database to check.
@@ -287,19 +294,20 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Checks if a table exists in the database specified for this Dbtool instance.
+	 * Checks if a table exists in the database specified for this Dbtool
+	 * instance.
 	 * 
 	 * @param table
 	 *        The table name.
-	 * @return <b>true</b> if the table exists in the database associated with this Dbtool instance; <b>false</b> if
-	 *         not.
+	 * @return <b>true</b> if the table exists in the database associated with
+	 *         this Dbtool instance; <b>false</b> if not.
 	 */
 	public boolean tableExists(String table) throws NoDatabaseForDbtoolException
 	{
 		if (_db == null)
 			throw new NoDatabaseForDbtoolException();
 
-		openDb();
+		//openDb();
 		try
 		{
 			DatabaseUtils.queryNumEntries(_db, table);
@@ -313,12 +321,13 @@ public class Dbtool implements IDbtoolAction
 		}
 		finally
 		{
-			closeDb();
+			//closeDb();
 		}
 	}
 
 	/**
-	 * Checks if a database table in the database associated with the current Dbtool instance is empty.
+	 * Checks if a database table in the database associated with the current
+	 * Dbtool instance is empty.
 	 * 
 	 * @param table
 	 *        The name of the table to check.
@@ -348,8 +357,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Indication to perform a 'select all' operation which when run() is called, the result is not a Cursor but a
-	 * DbRecordSet.
+	 * Indication to perform a 'select all' operation which when run() is
+	 * called, the result is not a Cursor but a DbRecordSet.
 	 * 
 	 * @return The Dbtool object, for chaining purposes.
 	 */
@@ -360,7 +369,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Indication to perform a 'select all' operation which when run() is called, the result will be a Cursor.
+	 * Indication to perform a 'select all' operation which when run() is
+	 * called, the result will be a Cursor.
 	 */
 	public Dbtool selectAll()
 	{
@@ -426,8 +436,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Indication to perform a 'select' query. This method differs from the get() methods in that it returns a Cursor
-	 * object.
+	 * Indication to perform a 'select' query. This method differs from the
+	 * get() methods in that it returns a Cursor object.
 	 * 
 	 * @param columns
 	 *        String arguments representing the columns to perfom the query on.
@@ -440,7 +450,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Indication to perform a 'select' query to get a single value which is a string.
+	 * Indication to perform a 'select' query to get a single value which is a
+	 * string.
 	 * 
 	 * @param column
 	 *        The column to query.
@@ -453,7 +464,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Indication to perform a 'select' query to get a single value which is an integer.
+	 * Indication to perform a 'select' query to get a single value which is an
+	 * integer.
 	 * 
 	 * @param column
 	 *        The column to query.
@@ -466,7 +478,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Indication to perform a 'select' query to get a single value which is a float.
+	 * Indication to perform a 'select' query to get a single value which is a
+	 * float.
 	 * 
 	 * @param column
 	 *        The column to query.
@@ -549,8 +562,9 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Indication to perform an 'insert' query on a table, passing the values to be inserted. The probable way this
-	 * method would be used is thus: dbtool.insert(values).into(tablename).run();
+	 * Indication to perform an 'insert' query on a table, passing the values to
+	 * be inserted. The probable way this method would be used is thus:
+	 * dbtool.insert(values).into(tablename).run();
 	 * 
 	 * @param values
 	 *        A ContentValues object containing the values to insert.
@@ -566,7 +580,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Sets the table on which to run an 'insert' query. Used thus: <b>dbtool.insert(values).into(table).run;</b>.
+	 * Sets the table on which to run an 'insert' query. Used thus:
+	 * <b>dbtool.insert(values).into(table).run;</b>.
 	 * 
 	 * @param table
 	 *        The database table name.
@@ -598,7 +613,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Sets the values to insert into a table. Used thus: <b>dbtool.insertInto(table).values(values).run();</b>.
+	 * Sets the values to insert into a table. Used thus:
+	 * <b>dbtool.insertInto(table).values(values).run();</b>.
 	 * 
 	 * @param values
 	 *        A ContentValues object containing the values to insert.
@@ -639,7 +655,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Specifies a RecordSet for an 'insert' operation. Used thus: <b>dbtool.insertInto(table).recordSet(rows).run;</b>.
+	 * Specifies a RecordSet for an 'insert' operation. Used thus:
+	 * <b>dbtool.insertInto(table).recordSet(rows).run;</b>.
 	 * 
 	 * @param rows
 	 *        The RecordSet object to insert.
@@ -655,7 +672,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Specifies a set of rows for an <b>insert</b> operation. Alias for <b>recordSet(rows)</b>.
+	 * Specifies a set of rows for an <b>insert</b> operation. Alias for
+	 * <b>recordSet(rows)</b>.
 	 */
 	public Dbtool rows(DbRecordSet rows)
 	{
@@ -875,7 +893,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Sets the <b>where</b> clause for a <b>select</b>, <b>delete</b>, or <b>update</b> query. Used thus:
+	 * Sets the <b>where</b> clause for a <b>select</b>, <b>delete</b>, or
+	 * <b>update</b> query. Used thus:
 	 * <b>dbtool.get(columnName).from(table).where(whereClause).run();</b>.
 	 * 
 	 * @param whereClause
@@ -1137,7 +1156,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Creates an sqlite database and creates an initial table represented by a TableProfile object.
+	 * Creates an sqlite database and creates an initial table represented by a
+	 * TableProfile object.
 	 * 
 	 * @param dbName
 	 *        The database name to create.
@@ -1157,12 +1177,14 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Creates an sqlite database and creates initial tables represented by an array of TableProfile objects.
+	 * Creates an sqlite database and creates initial tables represented by an
+	 * array of TableProfile objects.
 	 * 
 	 * @param dbName
 	 *        The database name.
 	 * @param profiles
-	 *        The array of TableProfile objects representing the tables to create.
+	 *        The array of TableProfile objects representing the tables to
+	 *        create.
 	 * @return The SQLiteDatabase object.
 	 */
 	public SQLiteDatabase createDb(String dbName, TableProfile[] profiles)
@@ -1179,7 +1201,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Creates an sqlite database and executes a Runnable action when the database is created.
+	 * Creates an sqlite database and executes a Runnable action when the
+	 * database is created.
 	 * 
 	 * @param dbName
 	 *        The database name.
@@ -1193,8 +1216,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Creates an sqlite database and executes corresponding actions when the database is created, opened, and updated
-	 * respectively.
+	 * Creates an sqlite database and executes corresponding actions when the
+	 * database is created, opened, and updated respectively.
 	 * 
 	 * @param dbName
 	 *        The database name.
@@ -1213,8 +1236,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Opens the SQLiteDabase for this Dbtool instance, if already defined via setDb(String dbName) or
-	 * setDb(SQLiteDatabase db).
+	 * Opens the SQLiteDabase for this Dbtool instance, if already defined via
+	 * setDb(String dbName) or setDb(SQLiteDatabase db).
 	 * 
 	 * @return
 	 */
@@ -1362,15 +1385,8 @@ public class Dbtool implements IDbtoolAction
 			{
 				tableProfile.build();
 			}
-			try
-			{
-				this.exec(tableProfile.getCreateSQL());
-				return true;
-			}
-			catch (Exception e)
-			{
-				return false;
-			}
+			this.exec(tableProfile.getCreateSQL());
+			return true;
 		}
 		return false;
 	}
@@ -1400,7 +1416,8 @@ public class Dbtool implements IDbtoolAction
 	}
 
 	/**
-	 * Creates a new database table from a TableProfile object. Deletes the table first if it exists.
+	 * Creates a new database table from a TableProfile object. Deletes the
+	 * table first if it exists.
 	 * 
 	 * @param tableProfile
 	 *        The TableProfile object to create the table from.

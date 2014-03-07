@@ -32,53 +32,103 @@ public class ColumnProfile
 		this.name = name;
 	}
 
+	/**
+	 * Sets the name of the column.
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public ColumnProfile setColumnName(String name)
 	{
 		this.name = name;
 		return this;
 	}
 
+	/**
+	 * Indicates an 'integer' type for a column.
+	 * 
+	 * @return The ColumnProfile instance, for chaining.
+	 */
 	public ColumnProfile type_int()
 	{
 		this.type = "INTEGER";
 		return this;
 	}
 
+	/**
+	 * Indicates a 'text' type for a column.
+	 * 
+	 * @return The ColumnProfile instance, for chaining.
+	 */
 	public ColumnProfile type_text()
 	{
 		this.type = "TEXT";
 		return this;
 	}
 
+	/**
+	 * Indicates a 'null' type for a column.
+	 * 
+	 * @return The ColumnProfile instance, for chaining.
+	 */
 	public ColumnProfile type_null()
 	{
 		this.type = "NULL";
 		return this;
 	}
 
+	/**
+	 * Indicates a 'float' type for a column.
+	 * 
+	 * @return The ColumnProfile instance, for chaining.
+	 */
 	public ColumnProfile type_float()
 	{
 		this.type = "FLOAT";
 		return this;
 	}
 
+	/**
+	 * Indicates a 'blob' type for a column.
+	 * 
+	 * @return The ColumnProfile instance, for chaining.
+	 */
 	public ColumnProfile type_blob()
 	{
 		this.type = "BLOB";
 		return this;
 	}
 
+	/**
+	 * Alias for type_blob()
+	 * 
+	 * @return
+	 */
 	public ColumnProfile type_object()
 	{
 		return type_blob();
 	}
 
+	/**
+	 * Sets the default value for a column.
+	 * 
+	 * @param value
+	 *        The default value.
+	 * @return The ColumnProfile instance, for chaining.
+	 */
 	public ColumnProfile setDefault(Object value)
 	{
 		this.defaultValueDefinition = "DEFAULT " + value.toString();
 		return this;
 	}
 
+	/**
+	 * Sets the default value for an 'int' column.
+	 * 
+	 * @param value
+	 *        The default value.
+	 * @return The ColumnProfile instance, for chaining.
+	 */
 	public ColumnProfile setDefault(int value)
 	{
 		this.defaultValueDefinition = "DEFAULT " + value;
@@ -86,49 +136,123 @@ public class ColumnProfile
 		return this;
 	}
 
+	/**
+	 * Sets the default value for a long column.
+	 * 
+	 * @param value
+	 *        The default value.
+	 * @return The ColumnProfile instance, for chaining.
+	 */
 	public ColumnProfile setDefault(long value)
 	{
 		this.defaultValueDefinition = "DEFAULT " + value;
 		return this;
 	}
 
+	/**
+	 * Sets the default value for a text column.
+	 * 
+	 * @param value
+	 *        The default value.
+	 * @return The ColumnProfile instance, for chaining.
+	 */
 	public ColumnProfile setDefault(String value)
 	{
-		//TODO Consider escaping single quotes
+		return setDefault(value, false);
+	}
+
+	/**
+	 * Sets the default value for a text column.
+	 * 
+	 * @param value
+	 * @param escapeSingleQuotes
+	 *        Indicates whether to escape single quotes in the value. Having a
+	 *        single quote in an sql value may cause an error. If you will be
+	 *        having at least a single quote in the value, this argument should
+	 *        be set to true.
+	 * @return
+	 */
+	public ColumnProfile setDefault(String value, boolean escapeSingleQuotes)
+	{
+		if (escapeSingleQuotes)
+		{
+			/*
+			 * Replace one occurrence of a single quote with two single
+			 * quotes. That's the generally accepted way for SQL syntax.
+			 */
+			value = value.replaceAll("'{1}", "''");
+		}
+
 		this.defaultValueDefinition = "DEFAULT '" + value + "'";
 		return this;
 	}
 
+	/**
+	 * Sets the default value for a float/decimal column.
+	 * 
+	 * @param value
+	 *        The default value.
+	 * @return The ColumnProfile instance for chaining.
+	 */
 	public ColumnProfile setDefault(float value)
 	{
 		this.defaultValueDefinition = "DEFAULT " + String.valueOf(value);
 		return this;
 	}
 
+	/**
+	 * Sets the 'NOT NULL' qualifier for a column.
+	 * 
+	 * @return The ColumnProfile instance for chaning.
+	 */
 	public ColumnProfile notNull()
 	{
 		this.notNullDefinition = "NOT NULL";
 		return this;
 	}
 
+	/**
+	 * Sets the 'unique' constraint for a column.
+	 * 
+	 * @return The ColumnProfile instance for chaining.
+	 */
 	public ColumnProfile unique()
 	{
 		this.uniqueDefinition = "UNIQUE";
 		return this;
 	}
 
+	/**
+	 * Sets the 'autoincrement' qualifier for a column.
+	 * 
+	 * @return The ColumnProfile instance for chaining.
+	 */
 	public ColumnProfile autoIncrement()
 	{
 		this.autoIncrementDefinition = "AUTOINCREMENT"; //should come before NOT NULL in the statement.
 		return this;
 	}
 
+	/**
+	 * Sets the 'primary key' constraint for a column.
+	 * 
+	 * @return The ColumnProfile instance for chaining.
+	 */
 	public ColumnProfile primaryKey()
 	{
 		this.primaryKeyDefinition = "PRIMARY KEY";
 		return this;
 	}
 
+	/**
+	 * Sets a 'foreign key' constraint on a column.
+	 * 
+	 * @param referenceTable
+	 *        The referenced table.
+	 * @param referenceColumns
+	 *        The columns in the referenced table.
+	 * @return
+	 */
 	public ColumnProfile foreignKey(String referenceTable, String referenceColumns)
 	{
 		String def = referenceTable + "(" + referenceColumns + ")";
@@ -156,6 +280,12 @@ public class ColumnProfile
 		return this.foreignKeyDefinition;
 	}
 
+	/**
+	 * Builds the column definition string for use within a 'create table' SQL
+	 * statement.
+	 * 
+	 * @return The column definition string.
+	 */
 	public String build()
 	{
 		if (!_built)
@@ -189,6 +319,11 @@ public class ColumnProfile
 		return this.fullColumnDefinition;
 	}
 
+	/**
+	 * Checks whether the column definition string has been built.
+	 * 
+	 * @return
+	 */
 	public boolean isBuilt()
 	{
 		return _built;
